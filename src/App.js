@@ -8,7 +8,7 @@ function App() {
   // <br/>
   return (
     <Router>
-      <Route path="/" exact component={Canvas} />
+      <Route path="/" exact component={Canvas} size={9} color={'black'} />
     </Router>
   )
 }

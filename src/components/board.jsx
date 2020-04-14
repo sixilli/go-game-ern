@@ -16,7 +16,7 @@ const StyledBoard = styled.div`
   color: white;
 `
 
-const Board = ({ board }) => (
+const Board = ({ board, size }) => (
     <StyledBoard width={board[0].length} height={board.length}>
         {board.map(row => row.map((cell, x) => <ul key={x}>{cell[0]}</ul>))}
     </StyledBoard>
