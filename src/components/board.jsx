@@ -16,10 +16,10 @@ const StyledBoard = styled.div`
   color: white;
 `
 
-const Board = ({ board, size }) => (
-    <StyledBoard width={board[0].length} height={board.length}>
-        {board.map(row => row.map((cell, x) => <ul key={x}>{cell[0]}</ul>))}
-    </StyledBoard>
+const Board = (board) => (
+  <StyledBoard width={board.length} height={board.length}>
+    {Object.keys(board).map(row => Object.keys(board[row]).map(cell => <li key={`${row}-${cell}`}>{board[row][cell]}</li>))}
+  </StyledBoard>
 )
 
 export default Board

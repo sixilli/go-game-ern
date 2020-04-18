@@ -1,30 +1,14 @@
 import React from 'react';
+import styled from 'styled-components'
 
-const StoneBase = (props) => {
-    const stoneBaseStyle = {
-        fill: '#a16012',
-        stroke: '#75450e',
-        strokeWidth: '2px',
-    }
+//background-image: something.png
+const StyledStone = styled.div`
+    color: ${color};
+    font-size: 15px;
+`
 
-    const baseSize = 5;
-    const baseR = 10
-    const meow = 'meow'
-
-    return (
-        <g>
-            <path
-                style={stoneBaseStyle}
-                d={meow}
-            />
-            <circle 
-                cx={baseSize}
-                cy={baseSize}
-                r={baseR}
-                style={stoneBaseStyle}
-            />
-        </g>
-    )
-}
+const StoneBase = (color) => (
+    <StyledStone color={color} />
+)
 
 export default StoneBase;
