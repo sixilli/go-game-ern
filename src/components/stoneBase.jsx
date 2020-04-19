@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 //background-image: something.png
 const StyledStone = styled.div`
-    color: ${color};
+    color: ${props => props.color};
     font-size: 15px;
 `
 

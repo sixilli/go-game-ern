@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components'
-import StoneBase from 'stoneBase';
+import StoneBase from './stoneBase';
 
 const StyledIntersect = styled.div`
     display: inline-block;
@@ -14,18 +14,10 @@ const StyledIntersect = styled.div`
     background-repeat: no-repeat;
 `
 
-const Intersect = (color) => {
-    const [hasStone, setHasStone] = useState(0)
-    const [stoneColor, setStoneColor] = useState('')
-
-    const placeStone = (color) => {
-        setHasStone(color === 1 ? 1 : 2)
-        setStoneColor(color === 1 ? 'black' : 'white')
-    }
-
+const Intersect = ({ value, onClick }) => {
     return (
-        <button className="intersect" onClick={placeStone(color)}>
-            {if (hasStone > 0) && <StoneBase color={stoneColor} />} 
+        <button className="intersect" onClick={onClick}>
+            {value}
         </button>
     )
 }
