@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components'
-import StoneBase from './stoneBase';
 
 const StyledIntersect = styled.div`
     display: inline-block;
@@ -15,9 +14,22 @@ const StyledIntersect = styled.div`
 `
 
 const Intersect = ({ value, onClick }) => {
+    let color
+    if (value === 0) {
+        color = 'empty'
+    } else if (value === 1) {
+        color = 'black'
+    } else if (value === 2) {
+        color = 'white'
+    } else {
+        color = 'ya goofed'
+    }
+
+    console.log('intersect:', value)
+
     return (
         <button className="intersect" onClick={onClick}>
-            {value}
+            {color}
         </button>
     )
 }

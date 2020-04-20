@@ -8,19 +8,21 @@ const socket = io('ws://127.0.0.1:3000')
 
 
 const Canvas = () => {
-    const [clientBoard, setClientBoard] = useState(false)
+    const [clientBoard, setClientBoard] = useState(null)
     //const [whiteStones, setWhiteStones] = useState(0)
     //const [blackStones, setBlackStones] = useState(0)
     const [color, setColor] = useState(0)
     //const [score, setScore] = useState(0)
-    //const [ready, setReady] = useState(false)
+    const [ready, setReady] = useState(false)
     const [toPlay, setToPlay] = useState(false)
 
     socket.connect()
 
     useEffect(() =>  {
         socket.on('game ready', board => {
-            startGame(board)
+            setClientBoard(board)
+            setColor('black')
+            setReady(true)
             color === 'black' ? setToPlay(true) : setToPlay(false)
             console.log('sockets.io-client: game ready')
         })
@@ -48,24 +50,11 @@ const Canvas = () => {
         })
     })
 
-    const startGame = (board) => {
-        setClientBoard(board)
-        // Test line
-        setColor('black')
-        //setReady(true)
-        //setScore(0)
-        //setWhiteStones(0)
-        //setBlackStones(0)
-        setToPlay(false)
-        console.log('startGame board: ' + board)
-        console.log('startGame board.length: ' + board.length)
-    }
-
     const handleOnClick = () => {
         socket.emit('ready')
     }
 
-    if (clientBoard.length >= 9) {
+    if (ready === true) {
         return (
             <div className="Game">
                 <Board board={clientBoard} />

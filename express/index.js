@@ -51,6 +51,7 @@ io.on('connection', socket => {
 
     socket.on('ready', () => {
         socket.emit('game ready', board.getBoard)
+        console.log('game ready')
     })
 
     socket.on('disconnect', () => console.log('Client disconnected'))
