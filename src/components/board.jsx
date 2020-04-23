@@ -1,4 +1,5 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components'
 import Intersect from './intersect'
 
@@ -13,16 +14,26 @@ const StyledBoard = styled.div`
   ${props => props.cell && 'flex-direction: row;'}
 `
 
-const Board = ({ board }) => {
-  console.log('board component:', board);
+const useStyles = makeStyles({
+  root: {
+    display: 'inline-block',
+    whiteSpace: 'normal',
+    verticalAlign: 'middle',
+  }
+})
+
+const Board = ({ board, color, updateBoard }) => {
+  const classes = useStyles;
   return (
     <StyledBoard>
       <div className="board">
         {board.map((row, rowIndex) => (
-          <div className="row" key={rowIndex}>
-            {row.map((cell, cellIndex) => (
-              <Intersect value={cell} onClick={null} />
-            ))}
+          <div className={classes.root} key={rowIndex}>
+            {row.map((cell, cellIndex) => {
+              return (
+                <Intersect cell={cell} col={cellIndex} row={rowIndex} color={color} updateBoard={updateBoard} />
+              )
+            })}
           </div>
         ))}
       </div>

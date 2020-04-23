@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components'
 
 const StyledIntersect = styled.div`
@@ -13,23 +13,28 @@ const StyledIntersect = styled.div`
     background-repeat: no-repeat;
 `
 
-const Intersect = ({ value, onClick }) => {
-    let color
-    if (value === 0) {
-        color = 'empty'
-    } else if (value === 1) {
-        color = 'black'
-    } else if (value === 2) {
-        color = 'white'
-    } else {
-        color = 'ya goofed'
+const Intersect = ({ cell, col, row,  color, updateBoard }) => {
+    let display
+
+    if (cell === 0) {
+        display = 'empty'
+    } 
+    
+    if (cell === 1) {
+        display = 'black'
+    } 
+    
+    if (cell === 2) {
+        display = 'white'
     }
 
-    console.log('intersect:', value)
+    const handleOnClick = () => {
+        updateBoard(col, row)
+    }
 
     return (
-        <button className="intersect" onClick={onClick}>
-            {color}
+        <button className="intersect" onClick={handleOnClick}>
+            {display}
         </button>
     )
 }

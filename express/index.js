@@ -21,7 +21,7 @@ io.on('connection', socket => {
     // Room routing goes here.
     // socket.join('room1')
     // io.to('room1').emit('event') - use this to send messages
-    let board = new Board(9)
+    let board = null
 
     socket.on('made move', (color, loc) => {
         switch  (color) {
@@ -49,7 +49,8 @@ io.on('connection', socket => {
         }
     })
 
-    socket.on('ready', () => {
+    socket.on('ready', (boardSize) => {
+        board = new Board(boardSize)
         socket.emit('game ready', board.getBoard)
         console.log('game ready')
     })

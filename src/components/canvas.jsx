@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Board from './board';
+import PlayerSetup from './setup'
 import StoneBase from './stoneBase';
 import Intersect from './intersect'
 
@@ -12,7 +13,7 @@ const Canvas = () => {
     //const [whiteStones, setWhiteStones] = useState(0)
     //const [blackStones, setBlackStones] = useState(0)
     const [color, setColor] = useState(0)
-    //const [score, setScore] = useState(0)
+    const [boardSize, setBoardSize] = useState(0)
     const [ready, setReady] = useState(false)
     const [toPlay, setToPlay] = useState(false)
 
@@ -50,21 +51,29 @@ const Canvas = () => {
         })
     })
 
-    const handleOnClick = () => {
-        socket.emit('ready')
+    const playerSetup = (ctx) => {
+        setColor(ctx['color'])
+        setBoardSize(ctx['boardSize'])
+        socket.emit('ready', ctx['boardSize'])
+    }
+
+    const updateBoard = (col, row) => {
+        let newBoard = clientBoard
+        newBoard[row][col] = color === 'black' ? 1 : 2
+        setClientBoard(newBoard)
     }
 
     if (ready === true) {
         return (
             <div className="Game">
-                <Board board={clientBoard} />
+                <Board board={clientBoard} color={color} updateBoard={updateBoard} />
             </div>
         )
     } 
 
     return (
         <div className="Game">
-            <button onClick={handleOnClick}>Ping socket</button>
+            <PlayerSetup playerSetup={playerSetup} />
         </div>
     )
 }
