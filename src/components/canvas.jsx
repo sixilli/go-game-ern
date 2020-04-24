@@ -49,7 +49,7 @@ const Canvas = () => {
             setColor(c)
             console.log(`sockets.io-client: color set to ${c}`)
         })
-    })
+    }, [clientBoard, color])
 
     const playerSetup = (ctx) => {
         setColor(ctx['color'])
@@ -58,9 +58,11 @@ const Canvas = () => {
     }
 
     const updateBoard = (col, row) => {
-        let newBoard = clientBoard
+        let newBoard = [...clientBoard]
         newBoard[row][col] = color === 'black' ? 1 : 2
         setClientBoard(newBoard)
+        console.log(col + ' ' + row)
+        console.log(newBoard)
     }
 
     if (ready === true) {
