@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Board from './board';
 import PlayerSetup from './setup'
-import StoneBase from './stoneBase';
-import Intersect from './intersect'
+import checkMove from '../utils/gameLogic'
 
 const io = require('socket.io-client')
 const socket = io('ws://127.0.0.1:3000')
@@ -54,15 +53,28 @@ const Canvas = () => {
     const playerSetup = (ctx) => {
         setColor(ctx['color'])
         setBoardSize(ctx['boardSize'])
+        if (color === 'black') {
+            setToPlay(true)
+        }
         socket.emit('ready', ctx['boardSize'])
     }
 
     const updateBoard = (col, row) => {
-        let newBoard = [...clientBoard]
-        newBoard[row][col] = color === 'black' ? 1 : 2
-        setClientBoard(newBoard)
-        console.log(col + ' ' + row)
-        console.log(newBoard)
+        if (toPlay) {
+            const validMove = checkMove(col, row, clientBoard)
+            if (validMove) {
+                let newBoard = [...clientBoard]
+                newBoard[row][col] = color === 'black' ? 1 : 2
+                setClientBoard(newBoard)
+                setToPlay(false)
+            } else {
+                console.log('invalid move')
+            }
+
+        } else {
+                console.log('wait ya turn')
+        }
+        
     }
 
     if (ready === true) {

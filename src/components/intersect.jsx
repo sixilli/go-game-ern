@@ -16,7 +16,7 @@ const StyledIntersect = styled.div`
 const Intersect = ({ cell, col, row,  color, updateBoard }) => {
     let display
 
-    if (cell === 0) {
+    if (cell === 0 || cell === 3) {
         display = 'empty'
     } 
     
