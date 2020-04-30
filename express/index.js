@@ -5,7 +5,7 @@ const http = require('http')
 const path = require('path')
 const port = process.env.PORT || 3000
 const socketIo = require('socket.io')
-const Board = require('./gameUtils')
+const { Board, checkMove } = require('./gameUtils')
 const server = http.createServer(app)
 const io = socketIo(server)
 
