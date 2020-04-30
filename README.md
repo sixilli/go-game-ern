@@ -16,4 +16,4 @@ Front End
 Back End
 - Build up backend to support multiple games
 - Add valid move check to backend
-- Implement rankings and player profiles.
+- Implement rankings and player profiles
