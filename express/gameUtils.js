@@ -31,13 +31,23 @@ class Board {
 
     checkCaptures() {
         let rowColLength = this.board.length
+        let group = []
+        let visited = new Array(rowColLength)
+        for (let i = 0; i < rowColLength; i++) {
+            visited[i] = new Array(rowColLength)
+            visited[i].fill(false)
+        }
+
         for (let row = 0; row < rowColLength; row++) {
             for (let col = 0; col < rowColLength; col++) {
+                if (this.board[row][col] > 0) {
+                    this.hasLiberties(row, col, visited, group, rowColLength, this.board[row][col])
+                }
             }
         }
     }
 
-    hasLiberties(row, col, visited, rowColLength, color) {
+    hasLiberties(row, col, visited, group, rowColLength, color) {
         if (row >= rowColLength || col >= rowColLength) {
             return
         }
@@ -46,19 +56,19 @@ class Board {
             return
         }
 
-        if (this.board[row][col] !== 0) {
-            return false
-        }
-
-        if (visited === true) {
+        if (visited[row][col] === true) {
             return
         }
 
+        if (this.board[row][col] === color) {
+            //group.push
+        }
+
         visited[row][col] = true
-        this.checkLiberties(row+1, col, visited, rowColLength, color)
-        this.checkLiberties(row, col+1, visited, rowColLength, color)
-        this.checkLiberties(row-1, col, visited, rowColLength, color)
-        this.checkLiberties(row, col-1, visited, rowColLength, color)
+        if (this.checkLiberties(row+1, col, visited, group, rowColLength, color) === true) return true
+        if (this.checkLiberties(row, col+1, visited, group, rowColLength, color) === true) return true
+        if (this.checkLiberties(row-1, col, visited, group, rowColLength, color) === true) return true
+        if (this.checkLiberties(row, col-1, visited, group, rowColLength, color) === true) return true
         return false
     }
 
