@@ -2,7 +2,7 @@
 // 0 = empty
 // 1 = black
 // 2 = white
-// 3 = captured
+// -1 = captured / deadzones
 class Board {
     constructor(size) {
         this.board = this.makeBoard(size)
@@ -29,37 +29,37 @@ class Board {
         return this.board[loc] === 0 ? true : false
     }
 
-    isCaptured(color) {
+    checkCaptures() {
         let rowColLength = this.board.length
-        let colorNum = color === 'black' ? 1 : 2
         for (let row = 0; row < rowColLength; row++) {
             for (let col = 0; col < rowColLength; col++) {
-                // Checking corners
-                if (row === 0 && col === 0) {
-                    if (this.board[row+1][col] > 0 && this.board[row][col+1] > 0) {
-                        if (this.board[row+1][col] === this.board[row][col+1]) {
-                            this.board[row][col] = colorNum === this.board[row][col+1] ? colorNum : 3
-                        }
-                    }
-                }
-
-                if (row === 0 && col === rowColLength) {
-                    if (this.board[row+1][col] > 0 && this.board[row][col-1] > 0) {
-                        if (this.board[row+1][col] === this.board[row][col-1]) {
-                            this.board[row][col] = 3
-                        }
-                    }
-                }
-                if (row === rowColLength && col === 0) {
-                    if (this.board[row-1][col] > 0 && this.board[row][col+1] > 0) {
-                        if (this.board[row-1][col] === this.board[row][col+1]) {
-                            this.board[row][col] = 3
-                        }
-                    }
-                }
-
             }
         }
+    }
+
+    hasLiberties(row, col, visited, rowColLength, color) {
+        if (row >= rowColLength || col >= rowColLength) {
+            return
+        }
+
+        if (row < 0 || col < 0) {
+            return
+        }
+
+        if (this.board[row][col] !== 0) {
+            return false
+        }
+
+        if (visited === true) {
+            return
+        }
+
+        visited[row][col] = true
+        this.checkLiberties(row+1, col, visited, rowColLength, color)
+        this.checkLiberties(row, col+1, visited, rowColLength, color)
+        this.checkLiberties(row-1, col, visited, rowColLength, color)
+        this.checkLiberties(row, col-1, visited, rowColLength, color)
+        return false
     }
 
     get getBoard() {
