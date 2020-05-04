@@ -23,12 +23,14 @@ io.on('connection', socket => {
     // io.to('room1').emit('event') - use this to send messages
     let board = null
 
-    socket.on('made move', (color, loc) => {
+    socket.on('made move', ({color, loc}) => {
         switch  (color) {
             case 'white':
-                if (board.isValid(loc)) {
+                if (board.isValidMove(loc)) {
                     board.updateBoard(loc, color)
-                    socket.broadcast.emit(`${color} moved`, { board: board.getBoard })
+                    // Placeholder for testing, will use game rooms instead of two emit events
+                    socket.broadcast.emit(`${color} moved`, board.getBoard)
+                    socket.emit(`${color} moved`, board.getBoard)
                     console.log('white moved?')
                 } else {
                     // Only notify sender of bad move.
@@ -36,9 +38,11 @@ io.on('connection', socket => {
                 }
                 break
             case 'black':
-                if (board.isValid(loc)) {
+                if (board.isValidMove(loc)) {
                     board.updateBoard(loc, color)
-                    socket.broadcast.emit(`${color} moved`, { board: board.getBoard })
+                    // Placeholder for testing, will use game rooms instead of two emit events
+                    socket.broadcast.emit(`${color} moved`, board.getBoard)
+                    socket.emit(`${color} moved`, board.getBoard)
                     console.log('black moved?')
                 } else {
                     socket.emit(`${color} invalid move`, { board: board.getBoard })

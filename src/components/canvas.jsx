@@ -67,6 +67,7 @@ const Canvas = () => {
                 newBoard[row][col] = color === 'black' ? 1 : 2
                 setClientBoard(newBoard)
                 setToPlay(false)
+                socket.emit(`made move`, {color: color, loc: [row, col]})
             } else {
                 console.log('invalid move')
             }
