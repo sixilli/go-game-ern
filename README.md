@@ -14,6 +14,7 @@ Front End
 - Add functionality to join games and send invites
 
 Back End
-- Build up backend to support multiple games
+- ~~Add flood fill algorithm to find captured stones~~ 
+- Build up backend to support multiple games and rooms
 - Add valid move check to backend
 - Implement rankings and player profiles
